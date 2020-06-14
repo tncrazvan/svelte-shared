@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import uuid from './../script/uuid.js';
+import uuid from './../scripts/uuid.js';
 
 let test = uuid();
 let store = false;

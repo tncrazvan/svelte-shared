@@ -1,8 +1,5 @@
 export default function QueryStringBuilder(){
 	let queries = {};
-	this.build=function(){
-		return result;
-	}
 	this.set=function(key,value){
 		queries[key+""] = value+"";
 		return this;
