@@ -1,3 +1,10 @@
+/*
+Example how to use:
+import storeable from "../scripts/storeable";
+
+const rememberMe = storeable("rememberMe",false);
+export default rememberMe;
+*/
 import { writable } from 'svelte/store';
 import localStorageExists from '../stores/localStorageExists.js';
 
