@@ -13,7 +13,6 @@
  *			});
  */
 export default async function install(worker='/worker.js'){
-	console.log("test");
 	return new Promise(resolve=>{
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register(worker);
