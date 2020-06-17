@@ -14,7 +14,6 @@
  */
 export default async function install(worker='/worker.js',callback){
 	return new Promise(resolve=>{
-		debugger;
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register(worker);
 			window.addEventListener('beforeinstallprompt', (request) => {
