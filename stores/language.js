@@ -26,15 +26,6 @@ let store = {
 	toPopATag: "to pop a tag",
 };
 
-if(lsm.check() && localStorage["language"]){
-	try{
-		store = JSON.parse(localStorage["language"]);
-		console.info("User Session store loaded from local storage.");
-	}catch(e){
-		console.info("Could not load user language: ",localStorage["language"],e);
-	}
-}
-
 const language = writable(store);
 
 export default storageExists;

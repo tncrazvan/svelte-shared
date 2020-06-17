@@ -1,3 +1,4 @@
-import storeable from '../scripts/storeable.js';
-const session = storeable('session',null);
+import storable from '../scripts/storable.js';
+
+const session = storable('session',null);
 export default session;

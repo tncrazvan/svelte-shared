@@ -12,7 +12,7 @@ let $localStorageExists = false;
 const unsubscribe = localStorageExists.subscribe(_localStorageExists=>$localStorageExists=_localStorageExists);
 unsubscribe();
 
-export default function storeable(storeName, store){
+export default function storable(storeName, store){
 	if($localStorageExists && localStorage[storeName]){
 		try{
 			store = JSON.parse(localStorage[storeName]);

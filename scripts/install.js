@@ -12,14 +12,20 @@
  *				console.log(result);
  *			});
  */
-export default async function install(worker='/worker.js'){
+export default async function install(worker='/worker.js',callback){
 	return new Promise(resolve=>{
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register(worker);
 			window.addEventListener('beforeinstallprompt', (request) => {
 				// Prevent Chrome 67 and earlier from automatically showing the prompt
 				request.preventDefault();
-				resolve(request)
+				request.prompt();
+				request
+					.userChoice
+					.then((result) => {
+						if(callback) callback();
+						resolve(request)
+					});
 			});
 		}
 	});

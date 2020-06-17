@@ -1,4 +1,4 @@
-import storeable from "../scripts/storeable";
+import storable from "../scripts/storable.js";
 
-const rememberMe = storeable("rememberMe",false);
+const rememberMe = storable("rememberMe",false);
 export default rememberMe;
