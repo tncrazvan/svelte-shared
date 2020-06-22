@@ -86,7 +86,7 @@
   let f7Calendar;
   let f7ColorPicker;
   function setType(e){
-    e.setAttribute("type",type);
+    e.setAttribute("type",inputType);
   }
   export function calendarInstance() {
     return f7Calendar;
@@ -166,17 +166,6 @@
     : type;
 
   $: needsValue = type !== 'file' && type !== 'datepicker' && type !== 'colorpicker';
-
-  $: inputValue = (() => {
-    let v;
-    if (typeof value !== 'undefined') {
-      v = value;
-    } else {
-      v = domValue();
-    }
-    if (typeof v === 'undefined' || v === null) return '';
-    return v;
-  })();
 
   // eslint-disable-next-line
   $: hasInfoSlots = hasSlots(arguments, 'info');
@@ -438,7 +427,7 @@
                 on:blur={onBlur}
                 on:input={onInput}
                 on:change={onChange}
-                value={inputValue}
+                value={value}
               >
                 <slot />
               </select>
@@ -478,7 +467,7 @@
                 on:blur={onBlur}
                 on:input={onInput}
                 on:change={onChange}
-                bind:value={inputValue}
+                bind:value={value}
               />
             {:else if type === 'texteditor'}
               <TextEditor
@@ -490,45 +479,6 @@
                 on:textEditorInput={onInput}
                 on:textEditorChange={onChange}
                 {...textEditorParams}
-              />
-            {:else if type === 'datepicker' || type === 'colorpicker' || type === 'file'}
-              <input
-                bind:this={inputEl}
-                style={inputStyle}
-                name={name}
-                type={inputType}
-                inputmode={inputmode}
-                placeholder={placeholder}
-                id={inputId}
-                size={size}
-                accept={accept}
-                autocomplete={autocomplete}
-                autocorrect={autocorrect}
-                autocapitalize={autocapitalize}
-                spellcheck={spellcheck}
-                autofocus={autofocus}
-                autosave={autosave}
-                disabled={disabled}
-                max={max}
-                maxlength={maxlength}
-                min={min}
-                minlength={minlength}
-                step={step}
-                multiple={multiple}
-                readonly={readonly}
-                required={required}
-                pattern={pattern}
-                validate={typeof validate === 'string' && validate.length ? validate : undefined}
-                data-validate={validate === true || validate === '' || validateOnBlur === true || validateOnBlur === '' ? true : undefined}
-                data-validate-on-blur={validateOnBlur === true || validateOnBlur === '' ? true : undefined}
-                tabIndex={tabindex}
-                data-error-message={errorMessageForce ? undefined : errorMessage}
-                class={inputClasses}
-                on:focus={onFocus}
-                on:blur={onBlur}
-                on:input={onInput}
-                on:change={onChange}
-                value={''}
               />
             {:else}
               <input
@@ -660,7 +610,7 @@
               on:blur={onBlur}
               on:input={onInput}
               on:change={onChange}
-              value={inputValue}
+              value={value}
             >
               <slot />
             </select>
@@ -700,7 +650,7 @@
               on:blur={onBlur}
               on:input={onInput}
               on:change={onChange}
-              value={inputValue}
+              bind:value={value}
             />
           {:else if type === 'texteditor'}
             <TextEditor
@@ -715,10 +665,10 @@
             />
           {:else}
             <input
+              use:setType
               bind:this={inputEl}
               style={inputStyle}
               name={name}
-              type={inputType}
               inputmode={inputmode}
               placeholder={placeholder}
               id={inputId}
@@ -750,7 +700,7 @@
               on:blur={onBlur}
               on:input={onInput}
               on:change={onChange}
-              value={type === 'datepicker' || type === 'colorpicker' || type === 'file' ? '' : inputValue}
+              bind:value={value}
             />
           {/if}
         {/if}
