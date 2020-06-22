@@ -10,6 +10,11 @@ export default function qsBuilder(){
 			between: {},
 		}*/
 	};
+
+	this.like=function(key,value){
+		this.equals(key,"%"+value+"%");
+	}
+
 	this.equals=function(key,value){
 		if(!queries[key+""]) queries[key+""] = {};
 		if(!queries[key+""].equals) queries[key+""].equals = [];
