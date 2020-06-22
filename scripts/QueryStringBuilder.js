@@ -1,4 +1,4 @@
-export default function qsBuilder(){
+export default function QueryStringBuilder(url){
 	let queries = {
 		/*<COL_NAME>: {
 			equals: {},
@@ -66,49 +66,46 @@ export default function qsBuilder(){
 				switch(operationName){
 					case "equals":
 						qs += encodeURIComponent(colmnName)
-						qs += i === 0?"=":";"
+						qs += i > 0?";":"="
 						for(let j = 0; j < operations[operationName].length; j++){
 							qs += (j>0?';=':'')+encodeURIComponent(operations[operationName][j]);
 						}
 					break;
 					case "notEquals":
 						qs += encodeURIComponent(colmnName)
-						qs += i === 0?"=":";"
-						qs += i > 0 ? "#":""
+						qs += i > 0?";":"=#"
 						for(let j = 0; j < operations[operationName].length; j++)
-							qs += (j>0?';#':'')+encodeURIComponent(operations[operationName][j]);
+							qs += (j>0?';=#':'')+encodeURIComponent(operations[operationName][j]);
 					break;
 					case "greaterThan":
 						qs += encodeURIComponent(colmnName)
-						qs += i === 0?"=":";"
-						qs += i > 0 ? ">":""
+						qs += i > 0?";":"=>"
 						for(let j = 0; j < operations[operationName].length; j++)
-							qs += (j>0?';>':'')+encodeURIComponent(operations[operationName][j]);
+							qs += (j>0?';=>':'')+encodeURIComponent(operations[operationName][j]);
 					break;
 					
 					case "lesserThan":
 						qs += encodeURIComponent(colmnName)
-						qs += i === 0?"=":";"
-						qs += i > 0 ? "<":""
+						qs += i > 0?";":"=<"
 						for(let j = 0; j < operations[operationName].length; j++)
-							qs += (j>0?';<':'')+encodeURIComponent(operations[operationName][j]);
+							qs += (j>0?';=<':'')+encodeURIComponent(operations[operationName][j]);
 					break;
 					
 					case "empty":
 						qs += encodeURIComponent(colmnName)
-						qs += i === 0?"=":";"
+						qs += i > 0?";":"="
 						qs += operations[operationName]? "!":""
 					break;
 
 					case "notEmpty":
 						qs += encodeURIComponent(colmnName)
-						qs += i === 0?"=":";"
+						qs += i > 0?";":"="
 						qs += operations[operationName]? ".":""
 					break;
 
 					case "between":
 						qs += encodeURIComponent(colmnName)
-						rqsesult += i === 0?"=":";"
+						qs += i > 0?";":"="
 						for(let j = 0; j < operations[operationName].length; j++)
 							qs += (j>0?';':'')+encodeURIComponent(operations[operationName][j].start)+":"+encodeURIComponent(operations[operationName][j].end);
 					break;
@@ -118,6 +115,6 @@ export default function qsBuilder(){
 			qss.push(qs);
 		}
 
-		return "?"+qss.join("&");
+		return url+"?"+qss.join("&");
 	}
 }
