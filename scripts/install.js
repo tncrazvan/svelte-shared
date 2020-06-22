@@ -12,7 +12,7 @@
  *				console.log(result);
  *			});
  */
-export default async function install(worker='/worker.js',callback){
+export default async function install(worker='worker.js',callback){
 	return new Promise(resolve=>{
 		if ('serviceWorker' in navigator) {
 			navigator.serviceWorker.register(worker);
@@ -27,6 +27,9 @@ export default async function install(worker='/worker.js',callback){
 						resolve(request)
 					});
 			});
+		}else{
+			console.warn("The ServiceWorker API does not seem to be available. Make sure youre website is secure.");
+			resolve(false);
 		}
 	});
 }
