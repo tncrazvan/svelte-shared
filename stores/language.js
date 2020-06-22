@@ -1,5 +1,4 @@
 import { writable } from 'svelte/store';
-import lsm from '../scripts/LocalStorageManager.js';
 
 let store = {
 	login: "Login",
