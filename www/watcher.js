@@ -1,5 +1,1 @@
-if('localStorage' in window){
-	localStorage["watcher"] = JSON.stringify({
-		
-	});
-}
+console.log("This script should not be cached.");

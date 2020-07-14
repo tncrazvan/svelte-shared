@@ -9,7 +9,7 @@ export default async function notify(title,body,vibrate=[200, 100, 200],icon='st
 	if(!window.cordova){
 		(worker.subscribe($worker=>{
 			if($worker === null){
-				console.warn("You need to install the main worker before sending a notification. Please open the settigs seidemenu and click 'INSTALLA LOCALMENTE'.");
+				console.warn("You need to install the main worker before sending a notification.");
 				return;
 			}
 			$worker.active.postMessage(JSON.stringify({
@@ -26,8 +26,8 @@ export default async function notify(title,body,vibrate=[200, 100, 200],icon='st
 	}else{
 		debugger;
 		cordova.plugins.notification.local.schedule({
-			title: 'My first notification',
-			text: 'Thats pretty easy...',
+			title,
+			text: body,
 			foreground: true
 	  });
 	}
