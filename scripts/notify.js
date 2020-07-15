@@ -1,8 +1,10 @@
 import worker from '../stores/worker.js';
 import Permission from './Permission.js';
-export default async function notify(title,body,vibrate=[200, 100, 200],icon='static/images/logo.png',tag=''){
-	debugger;
-	if(!await Permission.requestNotificationPermission()){
+import { Plugins } from '@capacitor/core';
+const { LocalNotifications } = Plugins;
+
+export default async function notify(title,body,delay=1,vibrate=[200, 100, 200],icon='static/images/logo.png',tag=''){
+	if(!await Permission.requestLocalNotificationPermission()){
 		console.warn("Notification won't be sent because notification permission has not been granted.");
 		return;
 	}
@@ -24,11 +26,19 @@ export default async function notify(title,body,vibrate=[200, 100, 200],icon='st
 			}));
 		}))();
 	}else{
-		debugger;
-		cordova.plugins.notification.local.schedule({
-			title,
-			text: body,
-			foreground: true
-	  });
+		await LocalNotifications.schedule({
+			notifications: [
+			  {
+				title: title,
+				body: body,
+				id: 1,
+				schedule: { at: new Date(Date.now() + 1000)},
+				sound: null,
+				attachments: null,
+				actionTypeId: "",
+				extra: null
+			  }
+			]
+		});
 	}
 }

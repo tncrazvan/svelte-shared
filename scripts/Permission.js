@@ -1,7 +1,9 @@
+import { Plugins } from '@capacitor/core';
+const { LocalNotifications, PushNotifications } = Plugins;
 export default function Permission(){}
 
-Permission.requestNotificationPermission = function(){
-	return new Promise(resolve=>{
+Permission.requestLocalNotificationPermission = function(){
+	return new Promise(async resolve=>{
 		if(!window.cordova){
 			Notification
 			.requestPermission()
@@ -9,9 +11,23 @@ Permission.requestNotificationPermission = function(){
 				resolve(permission==="granted")
 			});
 		}else{
-			cordova.plugins.notification.local.hasPermission(function (granted) { 
-				resolve(granted);
-			});
+			let request = await LocalNotifications.requestPermission();
+			resolve(request.granted);
 		}
 	});
 };
+
+Permission.requestPushNotificationPermission = function(){
+	return new Promise(async resolve=>{
+		if(!window.cordova){
+			resolve(false);
+		}else{
+			let request = await PushNotifications.requestPermission();
+			if(request.granted){
+				PushNotifications.register();
+				resolve(true);
+			}else resolve(false);
+		}
+	});
+};
+

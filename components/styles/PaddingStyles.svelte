@@ -1,5 +1,5 @@
 <style>
-	/*################# PADDINGS #################*/
+/*################# PADDINGS #################*/
   :global(.p-0){
 		padding: 0;
 	}
@@ -203,4 +203,4 @@
 	:global(.pb-12){
 		padding-bottom: 12rem;
 	}
-</style>>
+</style>
