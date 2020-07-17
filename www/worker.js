@@ -22,7 +22,7 @@ self.addEventListener('fetch', function(event) {
             //The reason being is that this script should fulfill the function of an "updater" of sorts,
             //which will notify the client when there's an update by uncaching specific files (implemented manually),
             //and in order to do that this script must always be served directly by the server.
-            if(event.request.url.endsWith("/watcher.js")) return response;
+            if(event.request.url.endsWith(".updated.js")) return response;
 
             // IMPORTANT: Clone the response. A response is a stream
             // and because we want the browser to consume the response
