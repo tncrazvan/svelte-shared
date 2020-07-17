@@ -23,7 +23,7 @@ export default async function install(worker='worker.js',callback){
 				request
 					.userChoice
 					.then((result) => {
-						if(callback) callback();
+						if(callback) callback(result === 'accepted');
 						resolve(request)
 					});
 			});
