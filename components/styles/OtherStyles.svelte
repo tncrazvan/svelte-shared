@@ -14,4 +14,16 @@
   :global(.float-right){
     float: right;
   }
+  :global(hr){
+		border: 0;
+		height: 1px;
+		background: rgba(0,0,0,0.125);
+	}
+  :global(*:not(input,textarea,p,span)){
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
+  :global(html){
+    overscroll-behavior: none;
+  }
 </style>
