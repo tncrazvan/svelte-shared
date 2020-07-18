@@ -11,16 +11,13 @@ async function find(registrations){
 			}
 		}
 		if(reg === null){
-			console.log("Service worker 'worker.js' not found!");
+			console.info("Service worker 'worker.js' not found!");
 		}else{
-			console.log("Service worker 'worker.js' found!");
+			console.info("Service worker 'worker.js' found!");
 			worker.set(reg);
 		}
 	}else{
-		console.log("Attempting to register service worker 'worker.js'...");
-		let reg = await navigator.serviceWorker.register("worker.js");
-		worker.set(reg);
-		console.log("Service worker 'worker.js' registered!");
+		console.info("No service workers found on this website.");
 	}
 }
 

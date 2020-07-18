@@ -1,6 +1,10 @@
+import worker from '../stores/worker.js';
+
 export default function install(callback){
 	return new Promise(async resolve=>{
 		if ('serviceWorker' in navigator) {
+			let reg = await navigator.serviceWorker.register("worker.js");
+			worker.set(reg);
 			window.addEventListener('beforeinstallprompt', (request) => {
 				// Prevent Chrome 67 and earlier from automatically showing the prompt
 				request.preventDefault();
