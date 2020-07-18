@@ -10,15 +10,14 @@ async function find(registrations){
 				break;
 			}
 		}
-		if(reg === null){
+		if(reg === null)
 			console.info("Service worker 'worker.js' not found!");
-		}else{
+		else{
 			console.info("Service worker 'worker.js' found!");
 			worker.set(reg);
 		}
-	}else{
+	}else
 		console.info("No service workers found on this website.");
-	}
 }
 
 if (!window.cordova && 'serviceWorker' in navigator) {
