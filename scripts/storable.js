@@ -17,7 +17,7 @@ export default function storable(storeName, store){
 		try{
 			store = JSON.parse(localStorage[storeName]);
 		}catch(e){
-			console.errpr("Could not load store \""+storeName+"\".",e);
+			console.error("Could not load store \""+storeName+"\".",e);
 			store = null;
 		}
 	}
