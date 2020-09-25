@@ -1,5 +1,7 @@
-export default function QueryStringBuilder(url){
-	let queries = {
+export default class QueryStringBuilder{
+
+	private url:string;
+	private queries = {
 		/*<COL_NAME>: {
 			equals: {},
 			notEquals: {},
@@ -10,56 +12,59 @@ export default function QueryStringBuilder(url){
 			between: {},
 		}*/
 	};
+	constructor(url){
+		this.url = url;
+	}
 
-	this.like=function(key,value){
+	like(key,value):void{
 		this.equals(key,"%"+value+"%");
 	}
 
-	this.equals=function(key,value){
-		if(!queries[key+""]) queries[key+""] = {};
-		if(!queries[key+""].equals) queries[key+""].equals = [];
-		queries[key+""].equals.push(value+"");
+	equals(key,value){
+		if(!this.queries[key+""]) this.queries[key+""] = {};
+		if(!this.queries[key+""].equals) this.queries[key+""].equals = [];
+		this.queries[key+""].equals.push(value+"");
 		return this;
 	};
-	this.notEquals=function(key,value){
-		if(!queries[key+""]) queries[key+""] = {};
-		if(!queries[key+""].notEquals) queries[key+""].notEquals = [];
-		queries[key+""].notEquals.push(value+"");
+	notEquals(key,value){
+		if(!this.queries[key+""]) this.queries[key+""] = {};
+		if(!this.queries[key+""].notEquals) this.queries[key+""].notEquals = [];
+		this.queries[key+""].notEquals.push(value+"");
 		return this;
 	};
-	this.greaterThan=function(key,value){
-		if(!queries[key+""]) queries[key+""] = {};
-		if(!queries[key+""].greaterThan) queries[key+""].greaterThan = [];
-		queries[key+""].greaterThan.push(value+"");
+	greaterThan(key,value){
+		if(!this.queries[key+""]) this.queries[key+""] = {};
+		if(!this.queries[key+""].greaterThan) this.queries[key+""].greaterThan = [];
+		this.queries[key+""].greaterThan.push(value+"");
 		return this;
 	};
-	this.lesserThan=function(key,value){
-		if(!queries[key+""]) queries[key+""] = {};
-		if(!queries[key+""].lesserThan) queries[key+""].lesserThan = [];
-		queries[key+""].lesserThan.push(value+"");
+	lesserThan(key,value){
+		if(!this.queries[key+""]) this.queries[key+""] = {};
+		if(!this.queries[key+""].lesserThan) this.queries[key+""].lesserThan = [];
+		this.queries[key+""].lesserThan.push(value+"");
 		return this;
 	};
-	this.empty=function(key){
-		if(!queries[key+""]) queries[key+""] = {};
-		if(!queries[key+""].empty) queries[key+""].empty = true;
+	empty(key){
+		if(!this.queries[key+""]) this.queries[key+""] = {};
+		if(!this.queries[key+""].empty) this.queries[key+""].empty = true;
 		return this;
 	};
-	this.notEmpty=function(key){
-		if(!queries[key+""]) queries[key+""] = {};
-		if(!queries[key+""].notEmpty) queries[key+""].notEmpty = true;
+	notEmpty(key){
+		if(!this.queries[key+""]) this.queries[key+""] = {};
+		if(!this.queries[key+""].notEmpty) this.queries[key+""].notEmpty = true;
 		return this;
 	};
-	this.between=function(key,start,end){
-		if(!queries[key+""]) queries[key+""] = {};
-		if(!queries[key+""].between) queries[key+""].between = [];
-		queries[key+""].between.push({start,end});
+	between(key,start,end){
+		if(!this.queries[key+""]) this.queries[key+""] = {};
+		if(!this.queries[key+""].between) this.queries[key+""].between = [];
+		this.queries[key+""].between.push({start,end});
 		return this;
 	};
 
-	this.toString=function(){
+	toString(){
 		let qss = new Array();
-		for(let colmnName in queries){
-			let operations = queries[colmnName];
+		for(let colmnName in this.queries){
+			let operations = this.queries[colmnName];
 			let qs = "";
 			let i = 0;
 			for(let operationName in operations){
@@ -115,6 +120,6 @@ export default function QueryStringBuilder(url){
 			qss.push(qs);
 		}
 
-		return url+"?"+qss.join("&");
+		return this.url+"?"+qss.join("&");
 	}
 }
