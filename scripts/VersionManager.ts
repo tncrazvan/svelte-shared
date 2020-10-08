@@ -1,5 +1,5 @@
 export default function VersionManager(){}
-VersionManager.watch = function(callback,options={}){
+VersionManager.watch = function(callback:Function,options:any={}):Promise<void>{
     return new Promise(resolve=>{
         options.delay = options.delay?options.delay:1 * 1000;
         options.attempts = options.attempts?options.attempts:7;
@@ -7,12 +7,12 @@ VersionManager.watch = function(callback,options={}){
         (async function poll(){
             options.attempts++;
             try{
-                if(localAttempts >= options.attempts && !Version){
+                if(localAttempts >= options.attempts && !window.Version){
                     console.warn("It looks like the \"window.Version\" class is not loading.");
                 }else{
-                    if(Version){
+                    if(window.Version){
                         if(callback) {
-                            await callback(Version);
+                            await callback(window.Version);
                             resolve();
                         }
                     }else setTimeout(poll,options.delay);

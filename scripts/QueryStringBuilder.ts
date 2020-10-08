@@ -1,7 +1,7 @@
 export default class QueryStringBuilder{
 
 	private url:string;
-	private queries = {
+	private queries:{[key:string]:any} = {
 		/*<COL_NAME>: {
 			equals: {},
 			notEquals: {},
@@ -16,52 +16,56 @@ export default class QueryStringBuilder{
 		this.url = url;
 	}
 
-	like(key,value):void{
-		this.equals(key,"%"+value+"%");
+	like(key,value):QueryStringBuilder{
+		return this.equals(key,"%"+value+"%");
 	}
 
-	equals(key,value){
+	equals(key,value):QueryStringBuilder{
 		if(!this.queries[key+""]) this.queries[key+""] = {};
 		if(!this.queries[key+""].equals) this.queries[key+""].equals = [];
 		this.queries[key+""].equals.push(value+"");
 		return this;
-	};
-	notEquals(key,value){
+	}
+	notEquals(key,value):QueryStringBuilder{
 		if(!this.queries[key+""]) this.queries[key+""] = {};
 		if(!this.queries[key+""].notEquals) this.queries[key+""].notEquals = [];
 		this.queries[key+""].notEquals.push(value+"");
 		return this;
-	};
-	greaterThan(key,value){
+	}
+	greaterThan(key,value):QueryStringBuilder{
 		if(!this.queries[key+""]) this.queries[key+""] = {};
 		if(!this.queries[key+""].greaterThan) this.queries[key+""].greaterThan = [];
 		this.queries[key+""].greaterThan.push(value+"");
 		return this;
-	};
-	lesserThan(key,value){
+	}
+	lesserThan(key,value):QueryStringBuilder{
 		if(!this.queries[key+""]) this.queries[key+""] = {};
 		if(!this.queries[key+""].lesserThan) this.queries[key+""].lesserThan = [];
 		this.queries[key+""].lesserThan.push(value+"");
 		return this;
-	};
-	empty(key){
+	}
+	empty(key):QueryStringBuilder{
 		if(!this.queries[key+""]) this.queries[key+""] = {};
 		if(!this.queries[key+""].empty) this.queries[key+""].empty = true;
 		return this;
-	};
-	notEmpty(key){
+	}
+	notEmpty(key):QueryStringBuilder{
 		if(!this.queries[key+""]) this.queries[key+""] = {};
 		if(!this.queries[key+""].notEmpty) this.queries[key+""].notEmpty = true;
 		return this;
-	};
-	between(key,start,end){
+	}
+	between(key,start,end):QueryStringBuilder{
 		if(!this.queries[key+""]) this.queries[key+""] = {};
 		if(!this.queries[key+""].between) this.queries[key+""].between = [];
 		this.queries[key+""].between.push({start,end});
 		return this;
-	};
+	}
 
-	toString(){
+	countQueries():number{
+		return Object.keys(this.queries).length;
+	}
+
+	toString():string{
 		let qss = new Array();
 		for(let colmnName in this.queries){
 			let operations = this.queries[colmnName];
