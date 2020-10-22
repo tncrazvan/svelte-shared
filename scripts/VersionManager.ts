@@ -1,3 +1,6 @@
+declare global {
+    interface Window { Version: any; }
+}
 export default class VersionManager{
     static watch(callback:Function,options:any={}):Promise<void>{
         return new Promise(resolve=>{
@@ -7,12 +10,12 @@ export default class VersionManager{
             (async function poll(){
                 options.attempts++;
                 try{
-                    if(localAttempts >= options.attempts && !Version){
+                    if(localAttempts >= options.attempts && !window.Version){
                         console.warn("It looks like the \"window.Version\" class is not loading.");
                     }else{
-                        if(Version){
+                        if(window.Version){
                             if(callback) {
-                                await callback(Version);
+                                await callback(window.Version);
                                 resolve();
                             }
                         }else setTimeout(poll,options.delay);
