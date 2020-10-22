@@ -3,9 +3,10 @@ const CACHE_ENABLED = true;
 
 function cacheRequestResponse(request,response){
   // Check if we received a valid response
-  if(!response || response.status !== 200 || response.type !== 'basic') {
+
+  /*if(!response || response.status !== 200 || response.type !== 'basic') {
     return response;
-  }
+  }*/
 
   //IMPORTANT: Ignore the "/watcher.js" script.
   //This should be the only file in your application that does not get cached locally.
@@ -48,7 +49,7 @@ self.addEventListener('fetch', function(event) {
 });
 
 
-function notify(title,body,vibrate=[200, 100, 200],icon='assets/images/logo.png',tag=''){
+function notify(title,body,vibrate=[200, 100, 200],icon='build/assets/images/logo.png',tag=''){
   return this.registration.showNotification(title, {
       body: body,
       icon: icon,
@@ -110,7 +111,7 @@ self.addEventListener('message', async function(event){
         lastUpdateAttemptTime = time;
         if(updatingCache) return;
         updatingCache = true;
-        console.info("Update starting...",data.caches);
+        console.info("Update starting...",{caches:data.caches});
         const requests = await update(data.caches);
         const urls = new Array();
         requests.forEach(request=>{
@@ -122,7 +123,7 @@ self.addEventListener('message', async function(event){
         }));
       break;
       case "update-complete":
-        console.info("Update completed!",data.requests);
+        console.info("Update completed!",{requests:data.requests});
         updatingCache = false;
       break;
   }

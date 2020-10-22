@@ -1,31 +1,31 @@
 "use strict"
 class Version{
-    static #REMOTE_VERSION_NUMBER = 2;
-    static #LOCAL_VERSION_NUMBER = undefined;
-    static #worker = "worker.js";
+    static REMOTE_VERSION_NUMBER = 2
+    static LOCAL_VERSION_NUMBER = undefined
+    static worker = "worker.js";
     static setWorkerName(fileName){
         if(fileName.length === 1 && fileName === '/')
             fileName = '';
         else if(fileName[0] === '/')
             fileName = fileName.substr(1);
-        this.#worker = fileName;
+        this.worker = fileName;
     }
     static getWorkerName(){
-        return this.#worker;
+        return this.worker;
     }
     static setLocalVersionNumber(version){
-        this.#LOCAL_VERSION_NUMBER = version;
+        this.LOCAL_VERSION_NUMBER = version;
     }
     static available(){
-        return this.#REMOTE_VERSION_NUMBER > this.#LOCAL_VERSION_NUMBER;
+        return this.REMOTE_VERSION_NUMBER > this.LOCAL_VERSION_NUMBER;
     }
     static getRemoteVersionNumber(){
-        return this.#REMOTE_VERSION_NUMBER;
+        return this.REMOTE_VERSION_NUMBER;
     }
     static getLocalVersionNumber(){
-        return this.#LOCAL_VERSION_NUMBER;
+        return this.LOCAL_VERSION_NUMBER;
     }
-    static #complete = async function(registration,event){
+    static complete = async function(registration,event){
         let data = JSON.parse(event.data);
         switch(data.action){
             case "update-continue":
@@ -52,9 +52,15 @@ class Version{
             registrations.forEach(registration=>{
                 if(registration.scope === location.origin+scope){
                     const callback=event=>{
-                        if(event.currentTarget.controller.scriptURL === registration.scope+this.#worker)
-                            this.#complete(registration,event);
-                        
+                        if(event.currentTarget.controller && event.currentTarget.controller.scriptURL){
+                            if(event.currentTarget.controller.scriptURL === registration.scope+this.worker){
+                                this.complete(registration,event);
+                            }
+                        }else{
+                            if(event.source.scriptURL === registration.scope+this.worker){
+                                this.complete(registration,event);
+                            }
+                        }
                         navigator.serviceWorker.removeEventListener("message",callback);
                     }
                     navigator.serviceWorker.addEventListener("message",callback);
@@ -64,9 +70,13 @@ class Version{
                     }));
                 }
             });
+            return true;
 		}else{
-			console.warn("The ServiceWorker API does not seem to be available. Make sure youre website is secure.");
+			console.warn("The ServiceWorker API does not seem to be available. Make sure your website is secure.");
 			return false;
-		}
+        }
+        return false;
     }
 }
+
+window.Version = Version;

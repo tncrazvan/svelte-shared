@@ -1,5 +1,7 @@
 import {Writable, writable} from 'svelte/store';
-
+declare global {
+    interface Window { cordova: any; }
+}
 const worker:Writable<any> = writable(null);
 async function find(registrations){
 	if(registrations.length > 0){
