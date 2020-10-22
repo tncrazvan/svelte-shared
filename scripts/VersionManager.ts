@@ -7,12 +7,12 @@ export default class VersionManager{
             (async function poll(){
                 options.attempts++;
                 try{
-                    if(localAttempts >= options.attempts && !window.Version){
+                    if(localAttempts >= options.attempts && !Version){
                         console.warn("It looks like the \"window.Version\" class is not loading.");
                     }else{
-                        if(window.Version){
+                        if(Version){
                             if(callback) {
-                                await callback(window.Version);
+                                await callback(Version);
                                 resolve();
                             }
                         }else setTimeout(poll,options.delay);
