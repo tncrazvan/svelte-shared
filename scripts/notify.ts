@@ -1,8 +1,10 @@
-import worker from '../stores/worker.js';
+import worker from '../stores/worker';
 import Permission from './Permission.js';
 import { Plugins } from '@capacitor/core';
 const { LocalNotifications } = Plugins;
-
+declare global {
+    interface Window { cordova: any; }
+}
 export default async function notify(
 	title:string,
 	body:string,

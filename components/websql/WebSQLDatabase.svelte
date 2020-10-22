@@ -1,5 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
+	import win from '../../scripts/win';
 	export let onReady;
 	export let onError;
 	export let name;

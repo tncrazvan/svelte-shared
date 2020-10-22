@@ -1,5 +1,8 @@
 import { Plugins } from '@capacitor/core';
 const { LocalNotifications, PushNotifications } = Plugins;
+declare global {
+    interface Window { cordova: any; }
+}
 export default class Permission{
 
 	static requestLocalNotificationPermission():Promise<boolean>{
