@@ -15,7 +15,6 @@ let store = {
 	previous: "Previous",
 	next: "Next",
 	quantity: "Quantity",
-	summary: "Summary",
 	subtotal: "Subtotal",
 	discount: "Discount",
 	shipping: "Shipping",
