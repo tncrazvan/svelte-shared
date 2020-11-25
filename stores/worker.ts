@@ -13,13 +13,16 @@ async function find(registrations){
 			}
 		}
 		if(reg === null)
-			console.info("Service worker 'worker.js' not found!");
+			console.info("Service worker '/worker.js' not found!");
 		else{
-			console.info("Service worker 'worker.js' found!");
+			console.info("Service worker '/worker.js' found!");
 			worker.set(reg);
 		}
-	}else
+	}else{
 		console.info("No service workers found on this website.");
+		console.log("New worker registration request created for /worker.js");
+		worker.set(await navigator.serviceWorker.register("/worker.js"));
+	}
 }
 
 if (!window.cordova && 'serviceWorker' in navigator) {
@@ -28,7 +31,7 @@ if (!window.cordova && 'serviceWorker' in navigator) {
 	if(window.cordova)
 		console.warn("Service will not be registered since you're running a cordova applicaiton!");
 	else
-		console.warn("Service worker 'worker.js' not found!");
+		console.warn("Service worker '/worker.js' not found!");
 }
 
 export default worker;
