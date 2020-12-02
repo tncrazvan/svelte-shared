@@ -26,7 +26,7 @@ async function find(registrations){
 }
 
 if (!window.cordova && 'serviceWorker' in navigator) {
-	navigator.serviceWorker.getRegistrations().then(find);
+	//navigator.serviceWorker.getRegistrations().then(find);
 }else{
 	if(window.cordova)
 		console.warn("Service will not be registered since you're running a cordova applicaiton!");
