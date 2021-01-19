@@ -1,8 +1,8 @@
 /*
 Example how to use:
-import storeable from "../scripts/storeable";
+import storable from "../scripts/storable";
 
-const rememberMe = storeable("rememberMe",false);
+const rememberMe = storable("rememberMe",false);
 export default rememberMe;
 */
 import { Writable, writable } from 'svelte/store';
